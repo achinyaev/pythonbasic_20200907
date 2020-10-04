@@ -16,6 +16,7 @@ class Some(SomeInterface):
         self.name = name
         self.idx = 0
 
+
     def get_idx(self):
         return self.idx
 
