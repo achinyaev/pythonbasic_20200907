@@ -35,3 +35,4 @@ if __name__ == '__main__':
     print(cls3.title)
     cls3.draw()
 
+
