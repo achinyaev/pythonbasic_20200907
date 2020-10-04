@@ -9,7 +9,7 @@
 import time
 class TraficLight():
     __color = ['Red', 'Yellow', 'Green']
-    def running(self, startlight):
+    def running(self, startlight=0):
         count = 0
         while count < 3:
             start = (self.__color.count(startlight) + count) % 3
@@ -26,4 +26,4 @@ class TraficLight():
 
 if __name__ == '__main__':
     tlight = TraficLight()
-    tlight.running('Yellow')
+    tlight.running()
