@@ -27,3 +27,5 @@ class TraficLight():
 if __name__ == '__main__':
     tlight = TraficLight()
     tlight.running()
+    tlight.running('Yellow') # Перезапуск с указанного цвета
+
