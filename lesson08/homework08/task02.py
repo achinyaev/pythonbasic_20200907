@@ -5,7 +5,7 @@
 При вводе пользователем нуля в качестве делителя программа должна корректно обработать эту ситуацию и не завершиться с ошибкой.
 """
 
-class MyExcept(ZeroDivisionError):
+class MyExcept(Exception):
     def __init__(self, text):
         self.text = text
 
