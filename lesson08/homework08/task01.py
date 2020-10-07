@@ -14,47 +14,63 @@ class ParseDate:
         self.date = text
 
     @classmethod
-    def parse_date(cls):
+    def parse_date(cls, text):
         try:
-            for item in cls.__db_dates:
-                cls.__db_result_dates[item] = [int(tmp) for tmp in item.split('-') if tmp.isdigit]
-        except TypeError as err:
-            print("Неверный формат данных ")
-        except ValueError as err:
-            print("Неверный формат данных ")
-        return cls.__db_result_dates
+            cls.__db_result_dates[text] = [int(tmp) for tmp in text.split('-') if tmp.isdigit]
+            print(f'Дата разобрана \"{cls.__db_result_dates[text]}\"')
+            return cls.__db_result_dates[text]
+        except KeyError:
+            print(f"Неверный формат данных - {text}, пример коректного ввода: 26-12-1978")
+        except TypeError:
+            print(f"Неверный тип данных - {text}, пример коректного ввода: 26-12-1978")
+        except ValueError:
+            print(f"Неверный формат даты - {text}, пример коректного ввода: 26-12-1978")
+
+
 
     @staticmethod
     def check_date(text):
-        __mounths = [31,28,31,30,31,30,31,31,30,31,30,31]
+        __mounths_days = [31,28,31,30,31,30,31,31,30,31,30,31]
         try:
             if (0<ParseDate.__db_result_dates[text][2]<3323) and (0<ParseDate.__db_result_dates[text][1]<13) and ParseDate.__db_result_dates[text][0] > 0: # Раз в 3322 года добавляется еще 1 день
-                if (ParseDate.__db_result_dates[text][2] % 4 == 0) and (ParseDate.__db_result_dates[text][2] % 100 != 0) or (ParseDate.__db_result_dates[text][2] % 400 == 0): 
-                    if __mounths[ParseDate.__db_result_dates[text][1]-1] >= ParseDate.__db_result_dates[text][0]:
+                if (ParseDate.__db_result_dates[text][2] % 4 == 0) and (ParseDate.__db_result_dates[text][2] % 100 != 0) or (ParseDate.__db_result_dates[text][2] % 400 == 0):
+                    if __mounths_days[ParseDate.__db_result_dates[text][1]-1] >= ParseDate.__db_result_dates[text][0]:
+                        print(f'Дата {text} верна')
                         return True
-                    elif ParseDate.__db_result_dates[text][1] == 2 and __mounths[ParseDate.__db_result_dates[text][1]-1] + 1 == ParseDate.__db_result_dates[text][0]:
+                    elif ParseDate.__db_result_dates[text][1] == 2 and __mounths_days[ParseDate.__db_result_dates[text][1]-1] + 1 == ParseDate.__db_result_dates[text][0]:
+                        print(f'Дата {text} верна')
                         return True
                     else:
+                        print(f'В феврале не может быть больше 29 дней у вас ->{text}')
                         return False
-                elif __mounths[ParseDate.__db_result_dates[text][1]-1] >= ParseDate.__db_result_dates[text][0]:
+                elif __mounths_days[ParseDate.__db_result_dates[text][1]-1] >= ParseDate.__db_result_dates[text][0]:
+                    print(f'Дата {text} верна')
                     return True
                 else:
+                    print(f'Дата {text} не верна')
                     return False
             else:
-                print('Такая дата не поддерживается')
+                print(f'Такая дата {text} не поддерживается')
                 return False
-        except IndexError:
-            return False
-        except AttributeError:
-            return False
         except KeyError:
-            return False
-    
+            print(f"{text} - Неверный формат даты")
+
 
 if __name__ == '__main__':
-    datestamp1 = '31-02-1976'
-    d1 = ParseDate(datestamp1)
-    d1.parse_date()
-    d1.check_date(datestamp1)
+    d1 = ParseDate('31-02-1976')
+    d2 = ParseDate('31-ff-1f78')
+    print('\n'+'#' * 80)
+    print(f'Обработка {d1.date}')
+    d1.parse_date(d1.date)
+
+    print('\n'+'#' * 80)
+    print(f'Обработка {d2.date}')
+    d2.parse_date(d2.date)
+
+    print('\n'+'#' * 80)
+    print('Проверка на корректность')
+    d1.check_date(d1.date)
+    d2.check_date(d2.date)
+    print(ParseDate())
 
 
