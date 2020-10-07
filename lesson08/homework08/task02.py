@@ -17,8 +17,8 @@ if __name__ == '__main__':
     try:
         num1 = int(num1)
         num2 = int(num2)
-        #if num2 == 0:
-        raise MyExcept('Делить на 0 нельзя')
+        if num2 == 0:
+            raise MyExcept('Делить на 0 нельзя')
         result = num1 / num2
     except ValueError:
         print('Вы ввели не число')
@@ -26,7 +26,6 @@ if __name__ == '__main__':
         print(err)
     else:
         print(f"Частное от деления {num1}/{num2} = {result}")
-
 
 
 
