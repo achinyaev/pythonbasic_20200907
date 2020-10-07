@@ -18,36 +18,43 @@ class ParseDate:
         try:
             for item in cls.__db_dates:
                 cls.__db_result_dates[item] = [int(tmp) for tmp in item.split('-') if tmp.isdigit]
-            return cls.__db_result_dates
-        except TypeError:
-            print(f'Неверный формат данных')
+        except TypeError as err:
+            print("Неверный формат данных ")
+        except ValueError as err:
+            print("Неверный формат данных ")
+        return cls.__db_result_dates
 
     @staticmethod
     def check_date(text):
+        __mounths = [31,28,31,30,31,30,31,31,30,31,30,31]
         try:
-            if (0<ParseDate.__db_result_dates[text][2]<3322) and (0<ParseDate.__db_result_dates[text][1]<13) and (0<ParseDate.__db_result_dates[text][0]<32):
-                if not (ParseDate.__db_result_dates[text][2] % 4):
-                    if  (ParseDate.__db_result_dates[text][2] % 400 or ParseDate.__db_result_dates[text][2] % 100):
-                        print('Год невысокосный 1 ')
-                        year = True
+            if (0<ParseDate.__db_result_dates[text][2]<3323) and (0<ParseDate.__db_result_dates[text][1]<13) and ParseDate.__db_result_dates[text][0] > 0: # Раз в 3322 года добавляется еще 1 день
+                if (ParseDate.__db_result_dates[text][2] % 4 == 0) and (ParseDate.__db_result_dates[text][2] % 100 != 0) or (ParseDate.__db_result_dates[text][2] % 400 == 0): 
+                    if __mounths[ParseDate.__db_result_dates[text][1]-1] >= ParseDate.__db_result_dates[text][0]:
+                        return True
+                    elif ParseDate.__db_result_dates[text][1] == 2 and __mounths[ParseDate.__db_result_dates[text][1]-1] + 1 == ParseDate.__db_result_dates[text][0]:
+                        return True
                     else:
-                        print('Год высокосный 2')
-                        year = True
+                        return False
+                elif __mounths[ParseDate.__db_result_dates[text][1]-1] >= ParseDate.__db_result_dates[text][0]:
+                    return True
                 else:
-                    print('Год невысокосный 3')
+                    return False
             else:
                 print('Такая дата не поддерживается')
-
+                return False
         except IndexError:
             return False
         except AttributeError:
             return False
-
-
+        except KeyError:
+            return False
+    
 
 if __name__ == '__main__':
-    d1 = ParseDate('12-12-2020')
+    datestamp1 = '31-02-1976'
+    d1 = ParseDate(datestamp1)
     d1.parse_date()
-    d1.check_date('12-12-2020')
+    d1.check_date(datestamp1)
 
 
