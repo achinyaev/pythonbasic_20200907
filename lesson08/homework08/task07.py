@@ -35,5 +35,3 @@ if __name__ == '__main__':
     print(c4)
     c5 = c1 - c2
     print(c5)
-    
-    
