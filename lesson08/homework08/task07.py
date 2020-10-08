@@ -24,8 +24,8 @@ class Complex:
     
     
 if __name__ == '__main__':
-    c1 = Complex(3,-5)   # c1 = 3 + 4i
-    c2 = Complex(5,-1)   # c2 = 5 - i
+    c1 = Complex(3,-5)   # c1 = 3 - 5i
+    c2 = Complex(5,1)   # c2 = 5 + i
     print(f'c1 = {c1}')
     print(f'c2 = {c2}')
     c3 = c1 + c2
